@@ -7,6 +7,46 @@ require_relative('../guest.rb')
 
 class RoomTest < MiniTest::Test
 
-  
+  def setup
+    @guest1 = Guest.new("Jimothy", 100, "Tragedy")
+    @guest2 = Guest.new("Jennether", 100, "Happy Birthday")
+
+    @song1 = Song.new("Tragedy", "When the feeling's gone and you can't go on it's tragedy")
+    @song2 = Song.new("Happy Birthday", "Happy Birthday to you")
+
+    @song_library = [@song1, @song2]
+
+    @blue_room = Room.new("Blue Room", 2, @song_library)
+
+  end
+
+  def test_check_room_name()
+    assert_equal("Blue Room", @blue_room.name())
+  end
+
+  def test_check_room_capacity()
+    assert_equal(2, @blue_room.capacity())
+  end
+
+  def test_get_song_library
+    assert_equal([@song1, @song2], @blue_room.song_library())
+  end
+
+  def test_can_play_karaoke
+    @blue_room.play_karaoke("Happy Birthday")
+    assert_equal("Happy Birthday to you", @blue_room.screen())
+  end
+
+  def test_can_add_guests
+    @blue_room.add_guests([@guest1, @guest2])
+    assert_equal([@guest1, @guest2], @blue_room.guests())
+  end
+
+  def test_can_remove_guests
+    @blue_room.add_guests([@guest1, @guest2])
+    @blue_room.remove_guests()
+    assert_equal([],@blue_room.guests())
+  end
+
 
 end
