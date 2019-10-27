@@ -14,9 +14,7 @@ class RoomTest < MiniTest::Test
     @song1 = Song.new("Tragedy", "When the feeling's gone and you can't go on it's tragedy")
     @song2 = Song.new("Happy Birthday", "Happy Birthday to you")
 
-    @song_library = [@song1, @song2]
-
-    @blue_room = Room.new("Blue Room", 2, @song_library)
+    @blue_room = Room.new("Blue Room", 2)
 
   end
 
@@ -24,15 +22,19 @@ class RoomTest < MiniTest::Test
     assert_equal("Blue Room", @blue_room.name())
   end
 
-  def test_check_room_capacity()
+  def test_room_capacity()
     assert_equal(2, @blue_room.capacity())
   end
 
   def test_get_song_library
+    @blue_room.add_song(@song1)
+    @blue_room.add_song(@song2)
     assert_equal([@song1, @song2], @blue_room.song_library())
   end
 
   def test_can_play_karaoke
+    @blue_room.add_song(@song1)
+    @blue_room.add_song(@song2)
     @blue_room.play_karaoke("Happy Birthday")
     assert_equal("Happy Birthday to you", @blue_room.screen())
   end
@@ -47,6 +49,13 @@ class RoomTest < MiniTest::Test
     @blue_room.remove_guests()
     assert_equal([],@blue_room.guests())
   end
+
+  def test_add_song
+    @blue_room.add_song(@song1)
+    @blue_room.add_song(@song2)
+    assert_equal(2, @blue_room.song_library.length())
+  end
+
 
 
 end

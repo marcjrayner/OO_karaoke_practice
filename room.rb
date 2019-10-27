@@ -5,12 +5,12 @@ class Room
 
   attr_reader :name, :capacity, :guests, :exit, :song_library, :screen
 
-  def initialize(name, capacity, song_library)
+  def initialize(name, capacity)
     @name = name
     @capacity = capacity
     @guests = []
     @check_out = []
-    @song_library = song_library
+    @song_library = []
     @screen = ""
   end
 
@@ -25,6 +25,10 @@ class Room
   def remove_guests
     @guests.each{ |guest| @check_out.push(guest) }
     @guests.clear()
+  end
+
+  def add_song(song)
+    @song_library.push(song)
   end
 
 
